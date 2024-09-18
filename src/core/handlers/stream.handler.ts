@@ -6,15 +6,15 @@ export class StreamHandler {
 
     processOutput(stream: ChildProcessWithoutNullStreams){
         stream.stdout.on('data', (data: Buffer) => {
-            this.outHandler.log(data)
-        })
+            this.outHandler.log(data);
+        });
 
         stream.stderr.on('data', (data: Buffer) => {
-            this.outHandler.error(data)
-        })
+            this.outHandler.error(data);
+        });
 
         stream.on('close', () => {
-            this.outHandler.end()
-        })
+            this.outHandler.end();
+        });
     }
 }
