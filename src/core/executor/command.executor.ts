@@ -12,7 +12,7 @@ export abstract class CommandExecutor<Input> {
 
 
     protected abstract prompt(): Promise<Input>;
-    protected abstract build(): Promise<Input>;
+    protected abstract build(input: Input): any;
     protected abstract spawn(): Promise<Input>;
     protected abstract processStream(): Promise<Input>;
 }
