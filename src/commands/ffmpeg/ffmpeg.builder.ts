@@ -10,4 +10,12 @@ export class ffmpegBuilder {
     input(inputPath: string){
         this.inputPath = inputPath;
     }
+
+    setVideoSize(width: number, height: number){
+
+    }
+
+    output(outputPath: string){
+        this.outputPath = outputPath;
+    }
 }
