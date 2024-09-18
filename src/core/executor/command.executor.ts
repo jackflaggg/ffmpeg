@@ -1,6 +1,6 @@
 import {IStreamLogger} from "../handlers/stream.logger.interface";
 
-export abstract class CommandExecutor {
+export abstract class CommandExecutor<Input> {
     constructor(private logger: IStreamLogger){};
 
     public async execute(){
@@ -10,17 +10,9 @@ export abstract class CommandExecutor {
         this.processStream();
     };
 
-    private prompt(): void {
-        console.log('Boiling water...');
-    }
 
-    private build(): void {
-        console.log('Pouring into cup...');
-    }
-
-    protected abstract spawn(): void;
-
-    protected processStream(): void {
-        console.log('Adding condiments...');
-    }
+    protected abstract prompt(): Promise<Input>;
+    protected abstract build(): Promise<Input>;
+    protected abstract spawn(): Promise<Input>;
+    protected abstract processStream(): Promise<Input>;
 }
