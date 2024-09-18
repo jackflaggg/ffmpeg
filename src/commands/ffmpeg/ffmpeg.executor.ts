@@ -1,7 +1,7 @@
 import {CommandExecutor} from "../../core/executor/command.executor";
 import {IStreamLogger} from "../../core/handlers/stream.logger.interface";
 import {ICommandExecFfmpeg, IFfmpegInput} from "../../models/common-models";
-import {ChildProcessWithoutNullStreams} from "node:child_process";
+import {ChildProcessWithoutNullStreams, spawn} from "node:child_process";
 import {FileService} from "../../core/files/files.service";
 import {PromptService} from "../../core/prompt/prompt.service";
 import {ffmpegBuilder} from "./ffmpeg.builder";
@@ -33,7 +33,9 @@ export class FfmpegExecutor extends CommandExecutor<IFfmpegInput>{
     }
 
     protected spawn({ output, command, args }: ICommandExecFfmpeg): ChildProcessWithoutNullStreams {
-        this.fileService.deleteFileIfExists(output);
+        this.fileService.deleteFileIfExists(output)
+            .then(() => console.log(`Deleted file if existed: ${output}`))
+            .catch(err => console.log(`Failed to delete file: ${err}`));
         return spawn(command, args);
     }
 
