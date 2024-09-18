@@ -5,16 +5,16 @@ export class StreamHandler {
     constructor(private outHandler: IStreamLogger) {}
 
     processOutput(stream: ChildProcessWithoutNullStreams){
-        stream.stdout.on('data', (data: any) => {
-            this.logger.log(data)
+        stream.stdout.on('data', (data: Buffer) => {
+            this.outHandler.log(data)
         })
 
-        stream.stdder.on('data', (data: any) => {
-            this.logger.error(data)
+        stream.stderr.on('data', (data: Buffer) => {
+            this.outHandler.error(data)
         })
 
         stream.on('close', () => {
-            this.logger.end()
+            this.outHandler.end()
         })
     }
 }
