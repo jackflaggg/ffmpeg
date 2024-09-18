@@ -1,18 +1,19 @@
 import {IStreamLogger} from "../handlers/stream.logger.interface";
+import {ChildProcessWithoutNullStreams} from "node:child_process";
 
 export abstract class CommandExecutor<Input> {
     constructor(private logger: IStreamLogger){};
 
     public async execute(){
-        this.prompt();
-        this.build();
-        this.spawn();
-        this.processStream();
+        const input = await this.prompt();
+        const command = this.build(input);
+        const stream = this.spawn(command);
+        this.processStream(stream);
     };
 
 
     protected abstract prompt(): Promise<Input>;
     protected abstract build(input: Input): any;
-    protected abstract spawn(): Promise<Input>;
-    protected abstract processStream(): Promise<Input>;
+    protected abstract spawn(command: any): ChildProcessWithoutNullStreams;
+    protected abstract processStream(stream: ChildProcessWithoutNullStreams): void;
 }
