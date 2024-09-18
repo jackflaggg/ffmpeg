@@ -13,11 +13,16 @@ export class ConsoleLogger implements IStreamLogger {
     public static getInstance(){
         return this.createSingleton();
     }
+
     log(...args: any[]): void{
         console.log(...args);
     };
-    end(): void{};
+
     error(...args: any[]): void{
         console.error(...args);
+    };
+
+    end(): void{
+        console.log('Готово!')
     };
 }
